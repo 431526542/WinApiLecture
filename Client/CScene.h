@@ -23,6 +23,7 @@ public:
 	virtual void Exit() = 0; //«ÿ¥Á æ¿ ≈ª√‚Ω√ »£√‚
 
 	void update();
+	void finalupdate();
 	void render(HDC _dc);
 
 public:
@@ -31,7 +32,10 @@ public:
 		m_arrObj[(UINT)_eType].push_back(_pObj);
 	}
 
-	
+	const vector<CObject*>& GetGroupObject(GROUP_TYPE _eType) 
+	{
+		return m_arrObj[(UINT)_eType];
+	}
 
 public:
 	CScene();

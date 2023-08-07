@@ -44,16 +44,26 @@ private:
 	HBITMAP m_hBit;
 	HDC		m_mdmDC;
 
+	//자주 사용하는 GDI object
+	HBRUSH	m_arrBrush[(UINT)BRUSH_TYPE::END];
+	HPEN	m_arrPen[(UINT)PEN_TYPE::END];
+
 public:
 
 public:
 	int init(HWND _hWnd, POINT _ptResolution);
 	void progress();
 
+private:
+	void CreateBrushPen();
+
 public:
-	HWND GetMainHwnd() { return m_hWnd; }
-	POINT GetResolution() { return m_ptResolution; }
-	HDC GetMainDC() { return m_hDC; }
+	HWND	GetMainHwnd() { return m_hWnd; }
+	POINT	GetResolution() { return m_ptResolution; }
+	HDC		GetMainDC() { return m_hDC; }
+
+	HBRUSH	GetBrush(BRUSH_TYPE _eType) { return m_arrBrush[(UINT)_eType]; }
+	HPEN	GetPen(PEN_TYPE _eType) { return m_arrPen[(UINT)_eType]; }
 	
 
 private:

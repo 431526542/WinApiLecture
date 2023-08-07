@@ -49,3 +49,19 @@ enum class SCENE_TYPE
 
 //PI
 #define PI 3.1415926535f
+
+
+//자주사용하는 브러시 밑 펜
+enum class BRUSH_TYPE
+{
+	HOLLOW,
+	END,
+};
+
+enum class PEN_TYPE
+{
+	RED,
+	GREEN,
+	BLUE,
+	END,
+};

@@ -5,6 +5,8 @@
 #include "CPlayer.h"
 #include "CMonster.h"
 
+#include "CCollisionMgr.h"
+
 #include "CCore.h"
 
 
@@ -43,8 +45,13 @@ void CScene_Start::Enter()
 		pMonsterObj->SetScale(Vec2(fObjScale, fObjScale));
 		AddObject(pMonsterObj, GROUP_TYPE::MONSTER);
 	}
+
+	//충돌 지정
+	//Player 그룹과 Monster 그룹 간의 충돌 체크
+	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::MONSTER);
 }
 
 void CScene_Start::Exit()
 {
+	CCollisionMgr::GetInst()->Reset();
 }
