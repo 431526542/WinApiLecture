@@ -34,9 +34,16 @@ void CTimeMgr::update()
 
 	//이전 프레임의 카운팅과 현재 프레임 카운팅 값을 차이를 구한다.
 	m_dDT = (double)(m_llCurCount.QuadPart - m_llPrevCount.QuadPart) / (double)(m_llFrequency.QuadPart);
+
 	//이전 카운트 값을 현재 카운트 값으로 갱신
 	m_llPrevCount = m_llCurCount;
 
+#ifdef  _DEBUG
+	if (m_dDT > 1. / 60.)
+	{
+		m_dDT = (1. / 60.);
+	}
+#endif //  _DEBUG
 }
 
 void CTimeMgr::render()

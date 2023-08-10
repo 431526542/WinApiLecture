@@ -22,9 +22,9 @@ public:
 	virtual void Enter() = 0; //해당 씬에 집입 시 호출
 	virtual void Exit() = 0; //해당 씬 탈출시 호출
 
-	void update();
-	void finalupdate();
-	void render(HDC _dc);
+	virtual void update();
+	virtual void finalupdate();
+	virtual void render(HDC _dc);
 
 public:
 	void AddObject(CObject* _pObj, GROUP_TYPE _eType)
@@ -36,6 +36,9 @@ public:
 	{
 		return m_arrObj[(UINT)_eType];
 	}
+
+	void DeleteGroup(GROUP_TYPE _eTarget);
+	void DeleteAll();
 
 public:
 	CScene();

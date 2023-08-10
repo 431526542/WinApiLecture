@@ -10,6 +10,7 @@ CObject::CObject()
 	: m_vPos{}
 	, m_vScale{}
 	, m_pCollider{}
+	, m_bAlive(true)
 {
 }
 
@@ -34,7 +35,6 @@ void CObject::render(HDC _dc)
 		, (int)(m_vPos.y + m_vScale.y / 2));
 
 	Component_render(_dc);
-		
 }
 
 void CObject::Component_render(HDC _dc)

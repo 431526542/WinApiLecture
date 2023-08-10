@@ -6,6 +6,10 @@
 #include "CMonster.h"
 
 #include "CCollisionMgr.h"
+#include "CKeyMgr.h"
+
+#include "CScene.h"
+#include "CSceneMgr.h"
 
 #include "CCore.h"
 
@@ -20,6 +24,18 @@ CScene_Start::~CScene_Start()
 
 }
 
+void CScene_Start::update()
+{
+	//오버라이딩해서 자식쪽에 구현되어 있지만 나는 부모쪽 코드를 그대로 사용하고싶다.
+	CScene::update();
+
+	if (KEY_TAP(KEY::ENTER))
+	{
+		ChangeScene(SCENE_TYPE::TOOL);
+	}
+
+}
+
 void CScene_Start::Enter()
 {
 
@@ -30,7 +46,7 @@ void CScene_Start::Enter()
 	AddObject(pObj, GROUP_TYPE::PLAYER);
 	
 	// add to Monster Object
-	int iMonCount = 10;
+	int iMonCount = 2;
 	float fMoveDist = 50.f;
 	float fObjScale = 50.f;
 	Vec2 vResolution = CCore::GetInst()->GetResolution();
@@ -39,6 +55,7 @@ void CScene_Start::Enter()
 	for (int i = 0; i < iMonCount; ++i)
 	{
 		pMonsterObj = new CMonster;
+		pMonsterObj -> SetName(L"Monster");
 		pMonsterObj->SetPos(Vec2((fMoveDist + fObjScale / 2.f) + (float)i * fTerm, 50.f));
 		pMonsterObj->SetCenterPos(pMonsterObj->GetPos());
 		pMonsterObj->SetMoveDistance(fMoveDist);
@@ -49,9 +66,14 @@ void CScene_Start::Enter()
 	//충돌 지정
 	//Player 그룹과 Monster 그룹 간의 충돌 체크
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::MONSTER);
+	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::MONSTER, GROUP_TYPE::PROJ_PLAYER);
 }
+
+
 
 void CScene_Start::Exit()
 {
+	DeleteAll();
+
 	CCollisionMgr::GetInst()->Reset();
 }

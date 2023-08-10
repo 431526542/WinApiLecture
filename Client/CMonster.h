@@ -9,7 +9,7 @@ private:
     float   m_fMaxDistance;
     int     m_iDir;
 
-    
+    int     m_iHP;
 
 public:
     float GetSpeed() { return m_fSpeed; }
@@ -18,9 +18,12 @@ public:
     void SetCenterPos(Vec2 _vPos) { m_vCenterPos = _vPos; }
     void SetMoveDistance(float _f) { m_fMaxDistance = _f; }
 
+    Vec2 GetCenterPos() { return m_vCenterPos; }
+public:
+    virtual void OnCollisionEnter(CCollider* _pOther);
+
 public:
     virtual void update();
-    virtual void render();
 
 public:
     CMonster();
