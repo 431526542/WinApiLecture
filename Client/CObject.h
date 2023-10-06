@@ -1,6 +1,11 @@
 #pragma once
+#include "global.h"
+
+#include "CCamera.h"
 
 class CCollider;
+class CAnimator;
+
 
 class CObject
 {
@@ -11,6 +16,7 @@ private:
 	Vec2		m_vScale;
 
 	CCollider*	m_pCollider;
+	CAnimator*	m_pAnimator;
 
 	bool		m_bAlive;
 
@@ -25,10 +31,12 @@ public:
 	const wstring& GetName() { return m_strName; }
 
 	CCollider* GetCollider() { return m_pCollider; }
+	CAnimator* GetAnimator() { return m_pAnimator; }
 
 	bool IsDead() { return !m_bAlive; }
 
 	void CreateCollider();
+	void CreateAnimator();
 
 	virtual void OnCollision(CCollider* _pOther) {}
 	virtual void OnCollisionEnter(CCollider* _pOther) {}
@@ -44,8 +52,11 @@ public:
 
 	void Component_render(HDC _dc);
 
+	virtual CObject* Clone() = 0;
+
 public:
-	CObject();
+	CObject(); 
+	CObject(const CObject& _origin);
 	virtual ~CObject();
 
 	friend class CEventMgr;

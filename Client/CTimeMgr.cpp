@@ -55,6 +55,7 @@ void CTimeMgr::render()
 	{
 		m_iFPS = m_iCallCount;
 		m_iCallCount = 0.f;
+
 		m_dAcc = 0.f;
 
 

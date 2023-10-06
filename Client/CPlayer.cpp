@@ -13,19 +13,31 @@
 #include "CTexture.h"
 
 #include "CCollider.h"
+#include "CAnimator.h"
+#include "CAnimation.h"
 
 CPlayer::CPlayer()
-	: m_pTex(nullptr)
 {
 	//texture load
-	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Player.bmp");
-
+	//m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Player.bmp");
 
 	CreateCollider();
-	GetCollider()->SetOffsetPos(Vec2(0.f,12.f));
+	GetCollider()->SetOffsetPos(Vec2(0.f, 12.f));
 	GetCollider()->SetScale(Vec2(20.f, 40.f));
+
+	CTexture* pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\link_0.bmp");
+	CreateAnimator();
+	GetAnimator()->CreateAnimation(L"WALK_DOWN", pTex, Vec2(0.f, 260.f),
+		Vec2(60.f, 65.f), Vec2(60.f, 0.f), 0.1f, 10);
+	GetAnimator()->Play(L"WALK_DOWN", true);
+
+	CAnimation* pAnim = GetAnimator()->FindAnimation(L"WALK_DOWN");
+	for (UINT i = 0; i < pAnim->GetMaxFrame(); ++i)
+	{
+		pAnim->GetFrame(i).vOffset = Vec2(0.f, -20.f);
+	}
 	
-}
+};
 
 CPlayer::~CPlayer()
 {
@@ -36,19 +48,19 @@ void CPlayer::update()
 {
 	Vec2 vPos = GetPos();
 
-	if (KEY_HOLE(KEY::W))
+	if (KEY_HOLD(KEY::W))
 	{
 		vPos.y -= 200.f * fDT;
 	}
-	if (KEY_HOLE(KEY::S))
+	if (KEY_HOLD(KEY::S))
 	{
 		vPos.y += 200.f * fDT;
 	}
-	if (KEY_HOLE(KEY::A))
+	if (KEY_HOLD(KEY::A))
 	{
 		vPos.x -= 200.f * fDT;
 	}
-	if (KEY_HOLE(KEY::D))
+	if (KEY_HOLD(KEY::D))
 	{
 		vPos.x += 200.f * fDT;
 	}
@@ -58,31 +70,35 @@ void CPlayer::update()
 	}
 
 	SetPos(vPos);
+
+	GetAnimator()->update();
 }
 
 void CPlayer::render(HDC _dc)
 {
+	/*
 	int iWidth = (int)m_pTex->Width();
 	int iHeight = (int)m_pTex->Height();
 
 	Vec2 vPos = GetPos();
 
-	/*BitBlt(_dc
+	BitBlt(_dc
 		, (int)(vPos.x - (float)(iWidth / 2))
 		, (int)(vPos.y - (float)(iHeight / 2))
 		, iWidth, iHeight
 		, m_pTex->GetDC()
 		, 0, 0, SRCCOPY);
-	*/
+	
 	
 	//내가 원하는 색상을 제외하고 받는법
+	
 	TransparentBlt(_dc
 			, (int)(vPos.x - (float)(iWidth / 2))
 			, (int)(vPos.y - (float)(iHeight / 2))
 			, iWidth, iHeight
 			, m_pTex->GetDC()
 			, 0, 0, iWidth, iHeight
-			,RGB(255,0,255));
+			,RGB(255,0,255));*/
 
 	//컴포넌트(충돌체, etc ....) 가 있는 경우
 	Component_render(_dc);

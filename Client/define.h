@@ -43,13 +43,16 @@ enum class SCENE_TYPE
 				
 //Key 
 #define KEY_CHECK(key,state) CKeyMgr::GetInst()->GetKeyState(key) == state
-#define KEY_HOLE(key) KEY_CHECK(key,KEY_STATE::HOLD)
+#define KEY_HOLD(key) KEY_CHECK(key,KEY_STATE::HOLD)
 #define KEY_TAP(key) KEY_CHECK(key,KEY_STATE::TAP)
 #define KEY_AWAY(key) KEY_CHECK(key,KEY_STATE::AWAY)
 #define KEY_NONE(key) KEY_CHECK(key,KEY_STATE::NONE)
+#define MOUSE_POS CKeyMgr::GetInst()->GetMousePos()
 
 //PI
 #define PI 3.1415926535f
+
+#define TILE_SIZE 64
 
 
 //자주사용하는 브러시 밑 펜
@@ -78,3 +81,6 @@ enum class EVENT_TYPE
 
 	END,
 };
+
+//오브젝트 클론함수
+#define CLONE(type) type* Clone() {return new type(*this);}

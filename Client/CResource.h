@@ -1,6 +1,5 @@
 #pragma once
 
-
 class CResource
 {
 private:
@@ -17,6 +16,6 @@ public:
 
 public:
 	CResource();
-	~CResource();
+	virtual ~CResource();
 };
 
