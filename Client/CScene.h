@@ -9,9 +9,15 @@ private:
 	vector<CObject*> m_arrObj[(UINT)GROUP_TYPE::END];
 	wstring			 m_strName; 
 
+	UINT			 m_iTileX;
+	UINT			 m_iTileY;
+
 public:
 	void SetName(const wstring& _strName) { m_strName = _strName; }
 	const wstring& GetName() { return m_strName; }
+
+	UINT GetTileX() { return m_iTileX; }
+	UINT GetTileY() { return m_iTileY; }
 
 	//순수 가상함수를 보유하고 있는 클래스는 추상클래스이고
 	//실제 객체화 할 수 있는 클레스가 아니라
@@ -39,6 +45,8 @@ public:
 
 	void DeleteGroup(GROUP_TYPE _eTarget);
 	void DeleteAll();
+
+	void CreateTile(UINT _iXCount, UINT _iYCount);
 
 public:
 	CScene();
