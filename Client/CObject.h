@@ -47,7 +47,7 @@ private:
 
 public:
 	virtual void update() = 0;
-	virtual void finalupdate() final;//자식쪽 오버라이딩 금지시키는 것
+	virtual void finalupdate();
 	virtual void render(HDC _dc);
 
 	void Component_render(HDC _dc);

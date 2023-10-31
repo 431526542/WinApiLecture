@@ -17,6 +17,11 @@ CAnimator::~CAnimator()
 
 void CAnimator::update()
 {
+		
+}
+
+void CAnimator::finalupdate()
+{
 	if (nullptr != m_pCurAnim)
 	{
 		m_pCurAnim->update();
@@ -25,7 +30,7 @@ void CAnimator::update()
 		{
 			m_pCurAnim->SetFrame(0);
 		}
-	}	
+	}
 }
 
 void CAnimator::render(HDC _dc)
