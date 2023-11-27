@@ -4,6 +4,7 @@
 #include "CObject.h"
 #include "CTile.h"
 #include "CResMgr.h"
+#include "CPartMgr.h"
 
 CScene::CScene()
 	: m_iTileX(0)
@@ -84,6 +85,8 @@ void CScene::DeleteAll()
 
 void CScene::CreateTile(UINT _iXCount, UINT _iYCount)
 {
+	DeleteGroup(GROUP_TYPE::TILE);
+
 	m_iTileX = _iXCount;
 	m_iTileY = _iYCount;
 
@@ -100,4 +103,34 @@ void CScene::CreateTile(UINT _iXCount, UINT _iYCount)
 			AddObject(pTile, GROUP_TYPE::TILE);
 		}
 	}
+}
+
+void CScene::LoadTile(const wstring& _strRelativePath)
+{
+	wstring strFilePath = CPartMgr::GetInst()->GetContentPath();
+	strFilePath += _strRelativePath;
+
+	// 커널 오브젝트
+	FILE* pFile = nullptr;
+
+	_wfopen_s(&pFile, strFilePath.c_str(), L"rb");
+	assert(pFile);
+
+	//타일 가로 세로 기수 로드
+	UINT xCount = 0;
+	UINT yCount = 0;
+
+	fread(&xCount, sizeof(UINT), 1, pFile);
+	fread(&yCount, sizeof(UINT), 1, pFile);
+
+	CreateTile(xCount, yCount);
+	//모든 타일들을 개별적으로 저장할 데이터를 로드하게 함
+	const vector<CObject*>& vecTile = GetGroupObject(GROUP_TYPE::TILE);
+
+	for (size_t i = 0; i < vecTile.size(); ++i)
+	{
+		((CTile*)vecTile[i])->Load(pFile);
+	}
+
+	fclose(pFile);
 }
